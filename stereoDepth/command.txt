@@ -1,0 +1,6 @@
+python get_images.py origin_images 0 cali
+python grabSeperate.py origin_images calibration_images cali
+python single_camera_calibration.py --image_dir calibration_images --image_format png --prefix left --square_size 0.0085 --width 9 --height 6 --save_file left_cam.yml
+python single_camera_calibration.py --image_dir calibration_images --image_format png --prefix right --square_size 0.0085 --width 9 --height 6 --save_file right_cam.yml
+python stereo_camera_calibration.py --left_file left_cam.yml --right_file right_cam.yml --left_prefix left --right_prefix right --left_dir calibration_images --right_dir calibration_images --image_format png --square_size 0.0085 --save_file stereo_cam.yml
+python stereo_depth.py --calibration_file stereo_cam.yml --left_source data\left.avi --right_source data\right.avi --is_real_time 0
